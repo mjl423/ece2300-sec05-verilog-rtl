@@ -14,13 +14,7 @@ module Subtractor_4b_RTL
   (* keep=1 *) output logic [3:0] diff
 );
 
-  //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement 4b subtractor using RTL
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  `ECE2300_UNUSED( in0 );
-  `ECE2300_UNUSED( in1 );
-  `ECE2300_FLOATING( diff );
+  assign diff = in0 - in1;
 
 endmodule
 
