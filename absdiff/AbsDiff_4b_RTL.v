@@ -17,7 +17,41 @@ module AbsDiff_4b_RTL
   (* keep=1 *) output logic [3:0] diff
 );
 
-  assign diff = (in0 > in1) ? (in0 - in1) : (in1 - in0);
+  // assign diff = (in0 > in1) ? (in0 - in1) : (in1 - in0);
+ wire cmp_gt;
+  GTComparator_4b_RTL cmp
+  (
+    .in0 (in0),
+    .in1 (in1),
+    .gt  (cmp_gt)
+  );
+
+  wire [3:0] mux0_out;
+
+  Mux2_4b_RTL mux0
+  (
+    .in0 (in1),
+    .in1 (in0),
+    .sel (cmp_gt),
+    .out (mux0_out)
+  );
+
+  wire [3:0] mux1_out;
+
+  Mux2_4b_RTL mux1
+  (
+    .in0 (in0),
+    .in1 (in1),
+    .sel (cmp_gt),
+    .out (mux1_out)
+  );
+
+  Subtractor_4b_RTL sub
+  (
+    .in0  (mux0_out),
+    .in1  (mux1_out),
+    .diff (diff)
+  );
 
 endmodule
 
